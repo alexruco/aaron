@@ -13,7 +13,7 @@ setup(
         # Add any other dependencies here
     ],
     description="A package to crawl websites and extract email addresses.",
-    author="Your Name",
+    author="Alex Ruco",
     author_email="alex@ruco.pt",
     url="https://github.com/alexruco/aaron",
 )

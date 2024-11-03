@@ -1,49 +1,56 @@
-# My Python Module 🚀
+# Aaron: Email Extraction Module 🚀
 
-Welcome to **My Python Module**! This project is designed to [brief description of what your module does].
+Welcome to **AARON**! This project is designed to extract email addresses from websites, starting with main and contact pages and, if necessary, crawling additional pages to locate contact information.
+
 
 ## Features ✨
 
-- **Feature 1**: Explain the first feature. 🎉
-- **Feature 2**: Explain the second feature. 🔥
-- **Feature 3**: Explain the third feature. 🌟
+- **Email Extraction**: Extracts email addresses from a specified webpage, using advanced parsing to handle formatting issues. 📧
+- **Contact Page Finder**: Automatically finds and navigates to contact pages on websites to retrieve email addresses efficiently. 🔍
+- **Crawling Additional Pages**: If no email is found on main or contact pages, Aaron crawls through internal pages to locate contact information. 🌐
 
 ## Installation 💻
 
 You can install the package via pip:
 
 ```bash
-pip install my_python_module
-Usage 📚
+pip install git+https://github.com/alexruco/aaron.git@main#egg=aaron
+```
+
+## Usage 📚
 
 Here's a quick example to get you started:
 <!--
 ```python
-from my_python_module import module
+from aaron import get_emails_from_website, extract_emails_from_page
 
-# Example usage
-result = module.some_function(5, 10)
-print(result)
+# Use the get_emails_from_website function to search a website for emails
+base_url = "https://www.example.com"
+emails = get_emails_from_website(base_url, max_crawl_pages=10)
+print(emails)
+
+# Or use extract_emails_from_page for a single page
+emails_from_page = extract_emails_from_page("https://www.example.com/contact")
+print(emails_from_page)
 ```
 -->
-Documentation 📖
 
-Documentation is available at [link to documentation].
 Running Tests 🧪
 
 To run the tests, you can use the unittest module or pytest.
 
-bash
+```bash
 
 python -m unittest discover tests
 # or
 pytest
+```
 
 ## Contributing 🤝
 
 We welcome contributions from the community! Here’s how you can get involved:
 
-1. **Report Bugs**: If you find a bug, please open an issue [here](https://github.com/yourusername/my_python_module/issues).
+1. **Report Bugs**: If you find a bug, please open an issue [here](https://github.com/alexruco/aaron/issues).
 2. **Suggest Features**: We’d love to hear your ideas! Suggest new features by opening an issue.
 3. **Submit Pull Requests**: Ready to contribute? Fork the repo, make your changes, and submit a pull request. Please ensure your code follows our coding standards and is well-documented.
 4. **Improve Documentation**: Help us improve our documentation. Feel free to make edits or add new content.
