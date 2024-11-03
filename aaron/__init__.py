@@ -25,8 +25,9 @@ def package_function():
 # If you want to expose certain submodules or functions
 # directly at the package level, you can import them here
 # and list them in the __all__ variable.
+# aaron/__init__.py
 
-__all__ = [
-    "some_function",
-    "package_function"
-]
+from .main import get_emails_from_website
+from .email_extractor import extract_emails_from_page
+
+__all__ = ["get_emails_from_website", "extract_emails_from_page"]

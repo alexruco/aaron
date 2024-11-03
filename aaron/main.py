@@ -1,73 +1,26 @@
-# email_extractor_with_button_check.py
+# main.py
 
-import re
-import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+from contact_page_finder import find_contact_page_url
+from email_extractor import extract_emails_from_page, extract_emails_from_multiple_pages
 
-def find_contact_page_url(base_url):
-    """Finds the contact page URL from the base page, including buttons with specific texts."""
-    try:
-        response = requests.get(base_url, timeout=10)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        # Keywords for common contact-related pages and specific button text
-        contact_keywords = ['contact', 'about', 'support', 'get-started']
-        button_texts = ['start now']  # Specific text on buttons that link to contact
-
-        # Check links
-        for link in soup.find_all('a', href=True):
-            href = link['href'].lower()
-            if any(keyword in href for keyword in contact_keywords):
-                contact_url = urljoin(base_url, link['href'])
-                return contact_url
-
-        # Check buttons
-        for button in soup.find_all(['a', 'button']):
-            button_text = button.get_text(strip=True).lower()
-            if button_text in button_texts:
-                contact_url = urljoin(base_url, button.get('href'))
-                return contact_url
-
-        return None
-    except requests.RequestException as e:
-        print(f"Error accessing {base_url}: {e}")
-        return None
-
-def extract_emails_from_website(url):
-    """Extracts email addresses from the specified URL content."""
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        page_content = response.text
-    except requests.RequestException as e:
-        print(f"Error accessing {url}: {e}")
-        return []
-
-    soup = BeautifulSoup(page_content, 'html.parser')
-    text_content = soup.get_text()
-
-    # Regex pattern for finding email addresses
-    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-    emails = re.findall(email_pattern, text_content)
-
-    # Removing duplicates by converting to a set
-    return list(set(emails))
-
-# Main function to find contact page and extract emails
-def main(base_url):
+def get_emails_from_website(base_url, max_crawl_pages=10):
+    # Step 1: Try finding the contact page and extracting emails
     contact_page_url = find_contact_page_url(base_url)
     if contact_page_url:
         print(f"Contact page found: {contact_page_url}")
-        emails = extract_emails_from_website(contact_page_url)
-        print(f"Extracted emails from {contact_page_url}: {emails}")
+        emails = extract_emails_from_page(contact_page_url)
     else:
-        print("No contact page found.")
-        # Optionally, extract emails from the main page if contact page is not found
-        emails = extract_emails_from_website(base_url)
-        print(f"Extracted emails from {base_url}: {emails}")
+        print("No contact page found. Checking main page...")
+        emails = extract_emails_from_page(base_url)
+
+    # Step 2: If no emails were found, crawl additional pages
+    if not emails:
+        print(f"No emails found on the contact page or main page. Crawling up to {max_crawl_pages} pages...")
+        emails = extract_emails_from_multiple_pages(base_url, num_pages=max_crawl_pages)
+
+    print(f"Extracted emails: {emails}")
 
 # Test the function
-base_url = "https://mysitefaster.com"  # Replace with the target website URL
-main(base_url)
+if __name__ == "__main__":
+    base_url = "https://360casas.com"  # Replace with the target website URL
+    get_emails_from_website(base_url, max_crawl_pages=10)
