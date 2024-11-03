@@ -56,6 +56,10 @@ We welcome contributions from the community! Here’s how you can get involved:
 4. Push to the branch: `git push origin my-feature-branch`.
 5. Open a pull request on the original repository.
 
+## Why Aaron?
+
+Aaron Montgomery Ward was an American entrepreneur based in Chicago who made his fortune through the use of mail order for retail sales of general merchandise to rural customers.  
+
 ## License 📄
 
 This project is licensed under the MIT License. Feel free to use, modify, and distribute this software in accordance with the terms outlined in the [LICENSE](LICENSE) file.
