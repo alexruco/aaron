@@ -1,7 +1,7 @@
 # main.py
 
-from contact_page_finder import find_contact_page_url
-from email_extractor import extract_emails_from_page, extract_emails_from_multiple_pages
+from aaron.contact_page_finder import find_contact_page_url
+from aaron.email_extractor import extract_emails_from_page, extract_emails_from_multiple_pages
 
 def get_emails_from_website(base_url, max_crawl_pages=10):
     # Step 1: Try finding the contact page and extracting emails
